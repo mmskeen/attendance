@@ -27,7 +27,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/attendanceDB", {
+mongoose.connect("mongodb+srv://admin-michael:" + process.env.MONGO_PASSWORD + "@cluster0-flcwo.mongodb.net/attendanceDB", {
   useNewUrlParser: true
 });
 mongoose.set('useCreateIndex', true);
@@ -336,5 +336,5 @@ if (port == null || port == "") {
   port = 3000;
 }
 app.listen(port, function() {
-  console.log("Server started");
+  console.log("Server started on port " + port + ".");
 });
