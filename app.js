@@ -128,12 +128,12 @@ app.get("/logout", function(req, res) {
 app.get("/attendance", function(req, res) {
   if (req.isAuthenticated()) {
     console.log(req.user._id);
-    request("http://localhost:3001/users/" + req.user._id + "/meetingsAttended", function (error, response, body) {
+    request("https://attendance-api-124.herokuapp.com/users/" + req.user._id + "/meetingsAttended", function (error, response, body) {
       console.log('error: ', error); // Print the error if one occurred
       console.log('statusCode: ', response && response.statusCode); // Print the response status code if a response was received
       console.log('body: ', body); // Print the HTML for the attended meetings response.
       const attendedMeetings = JSON.parse(body);
-      request("http://localhost:3001/users/" + req.user._id + "/meetingsHosted", function (error2, response2, body2) {
+      request("https://attendance-api-124.herokuapp.com/users/" + req.user._id + "/meetingsHosted", function (error2, response2, body2) {
         console.log('error2: ', error2); // Print the error if one occurred
         console.log('statusCode2: ', response2 && response2.statusCode); // Print the response status code if a response was received
         console.log('body2: ', body2); // Print the HTML for the Google homepage.
@@ -150,7 +150,7 @@ app.get("/attendance", function(req, res) {
 app.get("/meeting", function(req, res) {
   if (req.isAuthenticated()) {
     console.log();
-    request("http://localhost:3001/meetings/" + req.query.id, function(error, response, body) {
+    request("https://attendance-api-124.herokuapp.com/meetings/" + req.query.id, function(error, response, body) {
       console.log('error: ', error); // Print the error if one occurred
       console.log('statusCode: ', response && response.statusCode); // Print the response status code if a response was received
       console.log('body: ', body); // Print the HTML for the attendees response.
@@ -190,7 +190,7 @@ app.post("/hostMeeting", function(req, res) {
   console.log(mongoose.Types.ObjectId.isValid(meetingData.host));
   request.post(
     {
-      url: "http://localhost:3001/meetings",
+      url: "https://attendance-api-124.herokuapp.com/meetings",
       form: meetingData
     },
     function (err, httpResponse, body) {
@@ -211,7 +211,7 @@ app.post("/attendMeeting", function(req, res) {
   };
   request.post(
     {
-      url: "http://localhost:3001/users/" + req.user._id + "/attendEvent",
+      url: "https://attendance-api-124.herokuapp.com/users/" + req.user._id + "/attendEvent",
       form: attendData
     },
     function(err, httpResponse, body) {
@@ -232,7 +232,7 @@ app.post("/deleteAttendedMeeting", function(req, res) {
   };
   request.delete(
     {
-      url: "http://localhost:3001/users/" + req.body.attendeeId + "/attendEvent",
+      url: "https://attendance-api-124.herokuapp.com/users/" + req.body.attendeeId + "/attendEvent",
       form: attendData
     },
     function(err, httpResponse, body) {
@@ -250,7 +250,7 @@ app.post("/deleteHostedMeeting", function(req, res) {
   console.log(req.body);
   request.delete(
     {
-      url: "http://localhost:3001/meetings/" + req.body.meetingId,
+      url: "https://attendance-api-124.herokuapp.com/meetings/" + req.body.meetingId,
     },
     function(err, httpResponse, body) {
       if (err) {
@@ -278,7 +278,7 @@ app.post("/saveProfile", function(req, res) {
   console.log(profileData);
   request.patch(
     {
-      url: "http://localhost:3001/users/" + req.user._id,
+      url: "https://attendance-api-124.herokuapp.com/users/" + req.user._id,
       form: profileData
     },
     function(err, httpResponse, body) {
